@@ -5,7 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de fornecedores</title>
     <style>
-        h1{
+
+body{
+    font-family: arial;
+    background-color: #f8f9fa;
+    color: black;
+}
+
+main{
+    max-width: 500px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.campos{
+    margin-bottom: 20px;
+}
+label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input[type="text"]{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    
+}
+
+
+
+h1{
             text-align: center;
         }
     </style>
@@ -15,21 +49,22 @@
 
 <main>
     <!-- Tag para criar os formulários na página -->
-    <form action="#" method="POST">
-        <div>
+    <form  action="#" method="POST">
+        <div class="campos">
             <label for="nome">Nome da empresa de fornecimento:</label>
             <input type="text" id="nome" name="nome" required>
         </div>
 
-        <div>
+        <div class="campos">
             <label for="CNPJ">CNPJ (Somente os números)</label>
+            <!-- Validação de dados requerida pelo cenário 6. o CNPJ deve conter 14 dígitos -->
             <input type="text" id="CNPJ" minlength="14" maxlength="14" required>
         </div>
 
         <button type="submit">Finalizar cadastro</button>
     </form>
 
-    <a href="tela_inicial.html">Voltar para a lista de fornecedores</a>
+    <a href="tela_inicial.html" class="link-retorno">Voltar para a lista de fornecedores</a>
 </main>
 
 </body>
