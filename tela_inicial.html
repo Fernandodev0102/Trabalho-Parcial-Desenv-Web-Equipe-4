@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de fornecedores cadastrados</title>
+<style>
+
+.botao-novo{
+    color: white;
+    background-color: rgb(37, 122, 14);
+    padding: 10px ;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    }
+</style>
+</head>
+    <body>
+        <h1>Fornecedores principais do mercado</h1>
+        <main>
+
+                <!-- Acesso à tela para acrescentar novos fornecedores -->
+                <a href="cadastro-fornecedor.html">
+                    <button class="botao-novo">Novo Fornecedor</button>
+                </a>
+
+            <table border="1">
+
+                    <!-- Tudo que está dentro das tags thead> é o cabeçalho da tabela -->
+            <thead>
+            <tr>
+                <th>Fornecedor de Produtos</th>
+                <th>Cadastro CNPJ</th>
+                <th>Atributos</th>
+            </tr>
+            </thead>
+            <!-- Tudo que está na tag tbody representa as linhas da tabela -->
+                <tbody>
+                    <tr>
+                        <td>Fornecedor 1</td>
+                        <td>12.345.678/0001-90</td>
+                        <td>
+                            <button class="botao-atributos">Negociar</button>
+                            <button class="botao-atributos">Exluir cadastro</button>
+                            <button class="botao-atributos">Ver produtos</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </body>
+</html>
