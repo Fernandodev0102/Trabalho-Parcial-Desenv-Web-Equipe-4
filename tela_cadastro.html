@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de fornecedores</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastrar um novo fornecedor</h1>
+
+<main>
+    <!-- Tag para criar os formulários na página -->
+    <form action="#" method="POST">
+        <div>
+            <label for="nome">Nome da empresa de fornecimento:</label>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+
+        <div>
+            <label for="CNPJ">CNPJ (Somente os números)</label>
+            <input type="text" id="CNPJ" minlength="14" maxlength="14" required>
+        </div>
+
+        <button type="submit">Finalizar cadastro</button>
+    </form>
+
+    <a href="tela_inicial.html">Voltar para a lista de fornecedores</a>
+</main>
+
+</body>
+</html>
