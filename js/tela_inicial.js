@@ -1,4 +1,5 @@
-// Tela inicial: lista os fornecedores vindos do back-end (issue #3).
+// Tela inicial: lista os fornecedores vindos do back-end (issue #3)
+// e permite excluí-los, respeitando a trava de produtos vinculados (issue #4).
 
 const corpoTabela = document.getElementById("corpo-tabela-fornecedores");
 
@@ -24,11 +25,11 @@ function criarLinkDeAcao(texto, endereco) {
   return link;
 }
 
-function criarBotaoExcluir(idFornecedor) {
+function criarBotaoExcluir(fornecedor) {
   const botao = document.createElement("button");
   botao.className = "botao-atributos";
   botao.textContent = "Excluir cadastro";
-  botao.dataset.idFornecedor = idFornecedor; // usado na exclusão (issue #4)
+  botao.addEventListener("click", () => excluirFornecedor(fornecedor));
   return botao;
 }
 
@@ -37,7 +38,7 @@ function criarCelulaDeAcoes(fornecedor) {
   celula.append(
     criarLinkDeAcao("Editar", `tela_cadastro.html?id=${fornecedor.id}`),
     criarLinkDeAcao("Ver produtos", `lista-produtos-fornecedores.html?id=${fornecedor.id}`),
-    criarBotaoExcluir(fornecedor.id)
+    criarBotaoExcluir(fornecedor)
   );
   return celula;
 }
@@ -74,6 +75,30 @@ async function carregarFornecedores() {
     exibirFornecedores(await api.listarFornecedores());
   } catch (erro) {
     exibirLinhaInformativa("Não foi possível carregar a lista.");
+    exibirMensagem(erro.message);
+  }
+}
+
+// A trava também precisa existir no back-end; esta checagem antecipa a
+// mensagem para o usuário antes mesmo de pedir a confirmação.
+async function verificarSePodeExcluir(fornecedor) {
+  const erros = validarExclusaoFornecedor(await api.listarProdutos(fornecedor.id));
+  if (erros.length > 0) {
+    exibirMensagem(erros.join("\n"));
+    return false;
+  }
+  return true;
+}
+
+async function excluirFornecedor(fornecedor) {
+  esconderMensagem();
+  try {
+    if (!(await verificarSePodeExcluir(fornecedor))) return;
+    if (!confirm(`Deseja realmente excluir o fornecedor "${fornecedor.nome}"?`)) return;
+
+    await api.excluirFornecedor(fornecedor.id);
+    await carregarFornecedores();
+  } catch (erro) {
     exibirMensagem(erro.message);
   }
 }

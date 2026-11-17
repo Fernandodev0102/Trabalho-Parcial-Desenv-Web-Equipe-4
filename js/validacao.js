@@ -20,3 +20,13 @@ function validarFornecedor({ nome, cnpj }) {
   }
   return erros;
 }
+
+// Regra do cenário: um fornecedor que ainda tem produtos não pode ser excluído.
+function validarExclusaoFornecedor(produtosDoFornecedor) {
+  const quantidade = produtosDoFornecedor.length;
+  if (quantidade === 0) {
+    return [];
+  }
+  const descricao = quantidade === 1 ? "1 produto cadastrado" : `${quantidade} produtos cadastrados`;
+  return [`Não é possível excluir este fornecedor: ele ainda tem ${descricao}. Exclua os produtos antes.`];
+}
