@@ -51,10 +51,23 @@ background-color: #f1f1f1;
     border-radius: 4px;
     cursor: pointer;
     background-color: #e2e6ea;
+    /* links "Editar" e "Ver produtos" usam a mesma aparência dos botões */
+    display: inline-block;
+    color: black;
+    font-size: 13px;
+    text-decoration: none;
 }
 
 .botao-atributos:hover{
     background-color: #dae0e5;
+}
+
+.mensagem-erro{
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 </style>
@@ -68,6 +81,9 @@ background-color: #f1f1f1;
                     <button class="botao-novo">Novo Fornecedor</button>
                 </a>
 
+                <!-- Mensagens de erro para o usuário (ex.: servidor fora do ar) -->
+                <p id="mensagem" class="mensagem-erro" role="alert" hidden></p>
+
             <table >
 
                     <!-- Tudo que está dentro das tags thead> é o cabeçalho da tabela -->
@@ -78,22 +94,12 @@ background-color: #f1f1f1;
                 <th>Atributos</th>
             </tr>
             </thead>
-            <!-- Tudo que está na tag tbody representa as linhas da tabela -->
-                <tbody>
-                    <tr>
-                        <td>Fornecedor 1</td>
-                        <td>12.345.678/0001-90</td>
-                        <td>
-                            <button class="botao-atributos">Excluir cadastro</button>
-
-                            <a href="lista-produtos-fornecedores.html">
-                            <button class="botao-atributos">Ver produtos</button>
-                            </a>
-                            
-                        </td>
-                    </tr>
-                </tbody>
+            <!-- As linhas do tbody são preenchidas pelo js/tela_inicial.js com os dados do back-end -->
+                <tbody id="corpo-tabela-fornecedores"></tbody>
             </table>
         </main>
+
+        <script src="js/api.js"></script>
+        <script src="js/tela_inicial.js"></script>
     </body>
 </html>
