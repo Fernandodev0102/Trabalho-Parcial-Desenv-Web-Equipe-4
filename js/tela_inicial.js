@@ -1,7 +1,6 @@
 // Tela inicial: lista os fornecedores vindos do back-end (issue #3).
 
 const corpoTabela = document.getElementById("corpo-tabela-fornecedores");
-const areaMensagem = document.getElementById("mensagem");
 
 const TOTAL_COLUNAS = 3;
 
@@ -69,18 +68,13 @@ function exibirFornecedores(fornecedores) {
   corpoTabela.replaceChildren(...fornecedores.map(criarLinhaFornecedor));
 }
 
-function exibirErro(texto) {
-  areaMensagem.textContent = texto;
-  areaMensagem.hidden = false;
-}
-
 async function carregarFornecedores() {
   exibirLinhaInformativa("Carregando fornecedores...");
   try {
     exibirFornecedores(await api.listarFornecedores());
   } catch (erro) {
     exibirLinhaInformativa("Não foi possível carregar a lista.");
-    exibirErro(erro.message);
+    exibirMensagem(erro.message);
   }
 }
 

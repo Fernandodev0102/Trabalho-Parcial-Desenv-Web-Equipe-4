@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de fornecedores</title>
+    <link rel="stylesheet" href="css/comum.css">
     <style>
 
 body{
@@ -43,6 +44,11 @@ input[type="text"]:focus{
     outline: none;
 }
 
+.botao-salvar:disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 .botao-salvar{
     background-color: #28a745;
     color: white;
@@ -71,11 +77,12 @@ h1{
     </style>
 </head>
 <body>
-    <h1>Cadastrar um novo fornecedor</h1>
+    <!-- O título muda para "Editar fornecedor" quando a tela é aberta com ?id= na URL -->
+    <h1 id="titulo-pagina">Cadastrar um novo fornecedor</h1>
 
 <main>
-    <!-- Tag para criar os formulários na página -->
-    <form  action="#" method="POST">
+    <!-- O envio é feito pelo js/tela_cadastro.js; "novalidate" deixa as mensagens de erro por conta do JavaScript -->
+    <form id="formulario-fornecedor" novalidate>
         <div class="campos">
             <label for="nome">Nome da empresa de fornecimento:</label>
             <input type="text" id="nome" name="nome" required>
@@ -83,15 +90,22 @@ h1{
 
         <div class="campos">
             <label for="CNPJ">CNPJ (Somente os números)</label>
-            <!-- Validação de dados requerida pelo cenário 6. o CNPJ deve conter 14 dígitos -->
-            <input type="text" id="CNPJ" minlength="14" maxlength="14" required>
+            <!-- Validação de dados requerida pelo cenário 6: o CNPJ deve conter 14 dígitos (ver js/validacao.js) -->
+            <input type="text" id="CNPJ" name="cnpj" inputmode="numeric" maxlength="18" required>
         </div>
 
-        <button type="submit" class="botao-salvar">Finalizar cadastro</button>
+        <button type="submit" id="botao-salvar" class="botao-salvar">Finalizar cadastro</button>
     </form>
+
+    <!-- Mensagens de erro para o usuário (validação ou falha no servidor) -->
+    <p id="mensagem" class="mensagem-erro" role="alert" hidden></p>
 
     <a href="tela_inicial.html" class="link-retorno">Voltar para a lista de fornecedores</a>
 </main>
 
+    <script src="js/api.js"></script>
+    <script src="js/comum.js"></script>
+    <script src="js/validacao.js"></script>
+    <script src="js/tela_cadastro.js"></script>
 </body>
 </html>
