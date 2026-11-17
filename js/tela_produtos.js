@@ -1,11 +1,14 @@
-// Tela de produtos de um fornecedor (issue #5).
-// Aberta pela tela inicial com "?id=X": lista e cadastra produtos apenas do fornecedor X.
+// Tela de produtos de um fornecedor (issues #5 e #6).
+// Aberta pela tela inicial com "?id=X": lista, cadastra, edita e exclui produtos apenas do fornecedor X.
+// O mesmo formulário serve para cadastro e edição: o campo oculto id_produto vazio = novo produto.
 
 const formulario = document.getElementById("formulario-produto");
 const campoNome = document.getElementById("nome-produto");
 const campoEstoque = document.getElementById("estoque");
+const campoIdProduto = document.getElementById("id_produto");
 const campoIdFornecedor = document.getElementById("id_fornecedor");
 const botaoSalvar = document.getElementById("botao-salvar");
+const botaoCancelar = document.getElementById("botao-cancelar");
 const nomeFornecedor = document.getElementById("nome_fornecedor");
 const corpoTabela = document.getElementById("corpo-tabela-produtos");
 
@@ -19,10 +22,48 @@ function lerDadosDoFormulario() {
   };
 }
 
+function estaEditando() {
+  return campoIdProduto.value !== "";
+}
+
+function entrarNoModoEdicao(produto) {
+  esconderMensagem();
+  campoIdProduto.value = produto.id;
+  campoNome.value = produto.nome;
+  campoEstoque.value = produto.estoque;
+  botaoSalvar.textContent = "Salvar alterações";
+  botaoCancelar.hidden = false;
+  campoNome.focus();
+}
+
+function sairDoModoEdicao() {
+  formulario.reset();
+  campoIdProduto.value = ""; // reset() não limpa campos ocultos preenchidos via JavaScript
+  botaoSalvar.textContent = "Salvar produto";
+  botaoCancelar.hidden = true;
+}
+
+function criarBotaoDeAcao(texto, aoClicar) {
+  const botao = document.createElement("button");
+  botao.type = "button";
+  botao.className = "botao_atributo";
+  botao.textContent = texto;
+  botao.addEventListener("click", aoClicar);
+  return botao;
+}
+
+function criarCelulaDeAcoes(produto) {
+  const celula = document.createElement("td");
+  celula.append(
+    criarBotaoDeAcao("Editar", () => entrarNoModoEdicao(produto)),
+    criarBotaoDeAcao("Excluir", () => excluirProduto(produto))
+  );
+  return celula;
+}
+
 function criarLinhaProduto(produto) {
   const linha = document.createElement("tr");
-  const celulaDeAcoes = document.createElement("td"); // botões Editar/Excluir: issue #6
-  linha.append(criarCelula(produto.nome), criarCelula(produto.estoque), celulaDeAcoes);
+  linha.append(criarCelula(produto.nome), criarCelula(produto.estoque), criarCelulaDeAcoes(produto));
   return linha;
 }
 
@@ -58,6 +99,26 @@ function bloquearTela(motivo) {
   exibirMensagem(motivo);
 }
 
+function salvarProduto(dados) {
+  return estaEditando()
+    ? api.atualizarProduto(campoIdProduto.value, dados)
+    : api.criarProduto(idFornecedor, dados);
+}
+
+async function excluirProduto(produto) {
+  esconderMensagem();
+  if (!confirm(`Deseja realmente excluir o produto "${produto.nome}"?`)) return;
+  try {
+    await api.excluirProduto(produto.id);
+    if (campoIdProduto.value === String(produto.id)) {
+      sairDoModoEdicao(); // o produto que estava no formulário deixou de existir
+    }
+    await carregarProdutos();
+  } catch (erro) {
+    exibirMensagem(erro.message);
+  }
+}
+
 async function aoEnviarFormulario(evento) {
   evento.preventDefault();
   esconderMensagem();
@@ -71,8 +132,8 @@ async function aoEnviarFormulario(evento) {
 
   botaoSalvar.disabled = true; // evita cadastro duplicado por clique duplo
   try {
-    await api.criarProduto(idFornecedor, dados);
-    formulario.reset();
+    await salvarProduto(dados);
+    sairDoModoEdicao();
     await carregarProdutos();
   } catch (erro) {
     exibirMensagem(erro.message);
@@ -97,4 +158,8 @@ async function iniciarTela() {
 }
 
 formulario.addEventListener("submit", aoEnviarFormulario);
+botaoCancelar.addEventListener("click", () => {
+  esconderMensagem();
+  sairDoModoEdicao();
+});
 iniciarTela();
