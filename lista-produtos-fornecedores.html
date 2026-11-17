@@ -35,7 +35,74 @@
             font-size: 14px;
         }
 
-        
+        input[type=text],
+        input[type=number]{
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .botao_salvar{
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
+        .botao_salvar:hover{
+            background-color: #218838;
+        }
+
+        table{
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        th,td{
+            padding: 12px;
+            text-align: left;
+            border-bottom:  1px solid #ddd;
+        }
+
+        th{
+            background-color:#007bff;
+            color: white;
+        }
+
+        tr:hover{
+            background-color: #f1f1f1;
+        }
+
+        .botao_atributo{
+            padding: 6px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #e3e6ea;
+        }
+
+        .botao_atributo:hover{
+            background-color: #dae0e5;
+        }
+
+        .botao_voltar{
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -76,12 +143,12 @@
 
             <section>
                 <h2>Lista de produtos</h2>
-                <table border="1">
+                <table >
                     <thead>
                             <tr>
-                                <td>Nome do produto</td>
-                                <td>Quantidade em estoque</td>
-                                <td>Atributos</td>
+                                <th>Nome do produto</td>
+                                <th>Quantidade em estoque</td>
+                                <th>Atributos</td>
                             </tr>
                     </thead>
                     <tbody>
@@ -108,7 +175,7 @@
 
     </main>
 
-<a href="tela_inicial.html" class="botao_voltar"> Voltar para a tela inicial</a>
+<a href="tela_inicial.html" class="botao_voltar"> - Voltar para a tela inicial</a>
 
 
 
