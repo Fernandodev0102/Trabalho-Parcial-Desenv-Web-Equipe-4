@@ -21,6 +21,22 @@ function validarFornecedor({ nome, cnpj }) {
   return erros;
 }
 
+// `estoque` chega como número, ou null quando o campo foi deixado em branco.
+function validarProduto({ nome, estoque }) {
+  const erros = [];
+  if (!nome) {
+    erros.push("Informe o nome do produto.");
+  }
+  if (estoque === null) {
+    erros.push("Informe a quantidade em estoque.");
+  } else if (!Number.isInteger(estoque)) {
+    erros.push("A quantidade em estoque deve ser um número inteiro.");
+  } else if (estoque < 0) {
+    erros.push("A quantidade em estoque não pode ser negativa.");
+  }
+  return erros;
+}
+
 // Regra do cenário: um fornecedor que ainda tem produtos não pode ser excluído.
 function validarExclusaoFornecedor(produtosDoFornecedor) {
   const quantidade = produtosDoFornecedor.length;

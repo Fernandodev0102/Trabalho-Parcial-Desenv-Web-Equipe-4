@@ -3,18 +3,10 @@
 
 const corpoTabela = document.getElementById("corpo-tabela-fornecedores");
 
-const TOTAL_COLUNAS = 3;
-
 function formatarCnpj(cnpj) {
   const digitos = String(cnpj).replace(/\D/g, "");
   if (digitos.length !== 14) return cnpj;
   return digitos.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, "$1.$2.$3/$4-$5");
-}
-
-function criarCelula(texto) {
-  const celula = document.createElement("td");
-  celula.textContent = texto;
-  return celula;
 }
 
 function criarLinkDeAcao(texto, endereco) {
@@ -53,28 +45,20 @@ function criarLinhaFornecedor(fornecedor) {
   return linha;
 }
 
-function exibirLinhaInformativa(texto) {
-  const celula = criarCelula(texto);
-  celula.colSpan = TOTAL_COLUNAS;
-  const linha = document.createElement("tr");
-  linha.append(celula);
-  corpoTabela.replaceChildren(linha);
-}
-
 function exibirFornecedores(fornecedores) {
   if (fornecedores.length === 0) {
-    exibirLinhaInformativa("Nenhum fornecedor cadastrado.");
+    exibirLinhaInformativa(corpoTabela, "Nenhum fornecedor cadastrado.");
     return;
   }
   corpoTabela.replaceChildren(...fornecedores.map(criarLinhaFornecedor));
 }
 
 async function carregarFornecedores() {
-  exibirLinhaInformativa("Carregando fornecedores...");
+  exibirLinhaInformativa(corpoTabela, "Carregando fornecedores...");
   try {
     exibirFornecedores(await api.listarFornecedores());
   } catch (erro) {
-    exibirLinhaInformativa("Não foi possível carregar a lista.");
+    exibirLinhaInformativa(corpoTabela, "Não foi possível carregar a lista.");
     exibirMensagem(erro.message);
   }
 }
