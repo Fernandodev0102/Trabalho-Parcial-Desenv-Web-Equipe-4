@@ -29,7 +29,7 @@ function criarCelulaDeAcoes(fornecedor) {
   const celula = document.createElement("td");
   celula.append(
     criarLinkDeAcao("Editar", `tela_cadastro.html?id=${fornecedor.id}`),
-    criarLinkDeAcao("Ver produtos", `lista-produtos-fornecedores.html?id=${fornecedor.id}`),
+    criarLinkDeAcao("Cadastrar / Ver produtos", `lista-produtos-fornecedores.html?id=${fornecedor.id}`),
     criarBotaoExcluir(fornecedor)
   );
   return celula;
