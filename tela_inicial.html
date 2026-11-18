@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tabela de fornecedores cadastrados</title>
+    <link rel="stylesheet" href="css/comum.css">
 <style>
     body{
         font-family: arial;
@@ -51,6 +52,11 @@ background-color: #f1f1f1;
     border-radius: 4px;
     cursor: pointer;
     background-color: #e2e6ea;
+    /* links "Editar" e "Ver produtos" usam a mesma aparência dos botões */
+    display: inline-block;
+    color: black;
+    font-size: 13px;
+    text-decoration: none;
 }
 
 .botao-atributos:hover{
@@ -68,6 +74,9 @@ background-color: #f1f1f1;
                     <button class="botao-novo">Novo Fornecedor</button>
                 </a>
 
+                <!-- Mensagens de erro para o usuário (ex.: servidor fora do ar) -->
+                <p id="mensagem" class="mensagem-erro" role="alert" hidden></p>
+
             <table >
 
                     <!-- Tudo que está dentro das tags thead> é o cabeçalho da tabela -->
@@ -78,6 +87,8 @@ background-color: #f1f1f1;
                 <th>Atributos</th>
             </tr>
             </thead>
+            <!-- As linhas do tbody são preenchidas pelo js/tela_inicial.js com os dados do back-end -->
+                <tbody id="corpo-tabela-fornecedores"></tbody>
             <!-- Tudo que está na tag tbody representa as linhas da tabela -->
                 <tbody>
                     <tr>
@@ -93,5 +104,10 @@ background-color: #f1f1f1;
                 </tbody>
             </table>
         </main>
+
+        <script src="js/api.js"></script>
+        <script src="js/comum.js"></script>
+        <script src="js/validacao.js"></script>
+        <script src="js/tela_inicial.js"></script>
     </body>
 </html>

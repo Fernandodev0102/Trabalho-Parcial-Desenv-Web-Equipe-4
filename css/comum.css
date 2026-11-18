@@ -1,0 +1,10 @@
+/* Estilos usados por mais de uma tela */
+
+.mensagem-erro{
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f8d7da;
+    color: #721c24;
+    white-space: pre-line; /* permite uma linha por erro */
+}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos do fornecedor</title>
+    <link rel="stylesheet" href="css/comum.css">
     <style>
         body{
             font-family: arial;
@@ -62,6 +63,11 @@
             background-color: #218838;
         }
 
+        .botao_salvar:disabled{
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         table{
         width: 100%;
         border-collapse: collapse;
@@ -107,14 +113,16 @@
 </head>
 <body>
     <header>
-        <h1>Produtos de <span id="nome_fornecedor">Fornecedor de Alimentos S.A.</span></h1>
+        <!-- O nome do fornecedor é preenchido pelo js/tela_produtos.js a partir do ?id= da URL -->
+        <h1>Produtos de <span id="nome_fornecedor">...</span></h1>
     </header>
 
     <main>
         <section class="card_formulario">
         <h2>Cadastrar / Editar produtos</h2>
 
-        <form action="#" method="POST">
+        <!-- O envio é feito pelo js/tela_produtos.js; "novalidate" deixa as mensagens de erro por conta do JavaScript -->
+        <form id="formulario-produto" novalidate>
             <input type="hidden" id="id_produto" name="idproduto">
             <input type="hidden" id="id_fornecedor" name="idfornecedor"> 
 
@@ -129,15 +137,21 @@
 
                 <div class="itens_formulario">
                     <label for="estoque">Quantidade em estoque:</label>
-                    <input type="number" id="estoque" min="0" value="0" required>
+                    <!-- Regra do cenário 6: estoque não negativo (ver js/validacao.js) -->
+                    <input type="number" id="estoque" name="estoque" min="0" step="1" value="0" required>
                 </div>
                 <br>
 
             </div>
 
-            <button type="submit" class="botao_salvar">Salvar produto</button>
+            <button type="submit" id="botao-salvar" class="botao_salvar">Salvar produto</button>
+            <!-- Aparece só durante a edição de um produto, para voltar ao modo de cadastro -->
+            <button type="button" id="botao-cancelar" class="botao_atributo" hidden>Cancelar edição</button>
 
         </form>
+
+        <!-- Mensagens de erro para o usuário (validação ou falha no servidor) -->
+        <p id="mensagem" class="mensagem-erro" role="alert" hidden></p>
         </section>
         <br>
 
@@ -146,30 +160,13 @@
                 <table >
                     <thead>
                             <tr>
-                                <th>Nome do produto</td>
-                                <th>Quantidade em estoque</td>
-                                <th>Atributos</td>
+                                <th>Nome do produto</th>
+                                <th>Quantidade em estoque</th>
+                                <th>Atributos</th>
                             </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Produto 1</td>
-                            <td>10</td>
-                            <td>
-                                <button class="botao_atributo">Editar</button>
-                                <button class="botao_atributo">Excluir</button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Produto 2 </td>
-                            <td>30</td>
-                            <td>
-                                <button class="botao_atributo">Editar</button>
-                                <button class="botao_atributo">Excluir</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <!-- As linhas são preenchidas pelo js/tela_produtos.js com os produtos do fornecedor -->
+                    <tbody id="corpo-tabela-produtos"></tbody>
                 </table>
             </section>
 
@@ -177,8 +174,9 @@
 
 <a href="tela_inicial.html" class="botao_voltar"> - Voltar para a tela inicial</a>
 
-
-
-
+    <script src="js/api.js"></script>
+    <script src="js/comum.js"></script>
+    <script src="js/validacao.js"></script>
+    <script src="js/tela_produtos.js"></script>
 </body>
 </html>
