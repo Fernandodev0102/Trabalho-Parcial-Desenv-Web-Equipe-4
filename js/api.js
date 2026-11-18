@@ -5,7 +5,11 @@
 //   - Respostas de sucesso em JSON (ou 204 sem corpo, no DELETE).
 //   - Respostas de erro em JSON no formato { "mensagem": "texto para o usuário" }.
 
-const API_URL = "http://localhost:3000"; // trocar pelo endereço do back-end publicado
+// As telas são entregues pelo próprio back-end (localhost:3000 ou o endereço publicado),
+// então a API fica no mesmo endereço da página e basta um caminho relativo ("").
+// Se o HTML for aberto direto do disco ou pelo Live Server (porta 5500), usa o back-end local.
+const ABERTA_FORA_DO_SERVIDOR = window.location.protocol === "file:" || window.location.port === "5500";
+const API_URL = ABERTA_FORA_DO_SERVIDOR ? "http://localhost:3000" : "";
 
 const MENSAGEM_SEM_CONEXAO = "Não foi possível conectar ao servidor. Tente novamente em instantes.";
 const MENSAGEM_ERRO_GENERICO = "Ocorreu um erro inesperado no servidor.";
