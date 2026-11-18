@@ -83,6 +83,9 @@ h1{
 <main>
     <!-- O envio é feito pelo js/tela_cadastro.js; "novalidate" deixa as mensagens de erro por conta do JavaScript -->
     <form id="formulario-fornecedor" novalidate>
+    <!-- Tag para criar os formulários na página -->
+     <!-- a rota de envio deve ser acrestantada abaixo -->
+    <form  action="#" method="POST">
         <div class="campos">
             <label for="nome">Nome da empresa de fornecimento:</label>
             <input type="text" id="nome" name="nome" required>
@@ -92,6 +95,8 @@ h1{
             <label for="CNPJ">CNPJ (Somente os números)</label>
             <!-- Validação de dados requerida pelo cenário 6: o CNPJ deve conter 14 dígitos (ver js/validacao.js) -->
             <input type="text" id="CNPJ" name="cnpj" inputmode="numeric" maxlength="18" required>
+            <!-- Validação de dados requerida pelo cenário 6. o CNPJ deve conter 14 dígitos -->
+            <input type="text" id="CNPJ" name="CNPJ" minlength="14" maxlength="14" required>
         </div>
 
         <button type="submit" id="botao-salvar" class="botao-salvar">Finalizar cadastro</button>
