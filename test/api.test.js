@@ -187,8 +187,19 @@ describe("Banco de dados e erros gerais", () => {
     assert.match(resposta.corpo.mensagem, /Rota não encontrada/);
   });
 
+  it("entrega a tela inicial na raiz e redireciona o nome do arquivo para a raiz", async () => {
+    const raiz = await fetch(enderecoBase + "/");
+    assert.equal(raiz.status, 200);
+    assert.equal(raiz.redirected, false);
+    assert.match(await raiz.text(), /<title>Tabela de fornecedores cadastrados<\/title>/);
+
+    const arquivo = await fetch(enderecoBase + "/tela_inicial.html", { redirect: "manual" });
+    assert.equal(arquivo.status, 302);
+    assert.equal(arquivo.headers.get("location"), "/");
+  });
+
   it("entrega as telas, mas não expõe os arquivos do back-end", async () => {
-    assert.equal((await fetch(enderecoBase + "/tela_inicial.html")).status, 200);
+    assert.equal((await fetch(enderecoBase + "/tela_cadastro.html")).status, 200);
     assert.equal((await fetch(enderecoBase + "/js/api.js")).status, 200);
     assert.equal((await fetch(enderecoBase + "/backend/app.js")).status, 404);
     assert.equal((await fetch(enderecoBase + "/package.json")).status, 404);

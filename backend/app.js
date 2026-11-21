@@ -9,11 +9,13 @@ const produtoRotas = require("./rotas/produtoRotas");
 const { rotaNaoEncontrada, tratarErros } = require("./middlewares/tratarErros");
 
 const PASTA_DO_PROJETO = path.join(__dirname, "..");
-const TELAS = ["tela_inicial.html", "tela_cadastro.html", "lista-produtos-fornecedores.html"];
+const TELA_INICIAL = "tela_inicial.html";
+const TELAS = ["tela_cadastro.html", "lista-produtos-fornecedores.html"];
 
 // Publica só o que é da interface (as 3 telas, css/ e js/), nunca a pasta do back-end ou o .env.
 function servirInterface(app) {
-  app.get("/", (req, res) => res.redirect("/tela_inicial.html"));
+  app.get("/", (req, res) => res.sendFile(path.join(PASTA_DO_PROJETO, TELA_INICIAL)));
+  app.get(`/${TELA_INICIAL}`, (req, res) => res.redirect("/"));
   for (const tela of TELAS) {
     app.get(`/${tela}`, (req, res) => res.sendFile(path.join(PASTA_DO_PROJETO, tela)));
   }
