@@ -7,7 +7,7 @@ Aplicação Web para o gerente do Mercadinho São José cadastrar os **fornecedo
 
 | | |
 |---|---|
-| Aplicação publicada | _preencher após o deploy (ver [Publicação](#publicação))_ |
+| Aplicação publicada | https://mercadinho.unifor.mathlab.cc/ |
 | Repositório | https://github.com/Fernandodev0102/Trabalho-Parcial-Desenv-Web-Equipe-4 |
 
 ---
@@ -55,8 +55,8 @@ Aplicação Web para o gerente do Mercadinho São José cadastrar os **fornecedo
 |---|---|
 | Interface | HTML, CSS e JavaScript puro (sem framework), `fetch` para chamar a API |
 | Serviço Web | Node.js 20+ com Express 5 (API REST em JSON) |
-| Banco de dados | PostgreSQL (biblioteca `pg`); em produção, [Neon](https://neon.com) (plano gratuito) |
-| Hospedagem | [Render](https://render.com) (Web Service gratuito), que serve a API e as telas no mesmo endereço |
+| Banco de dados | PostgreSQL (biblioteca `pg`), configurado pela variável `DATABASE_URL` |
+| Hospedagem | Contêiner Docker ([`Dockerfile`](Dockerfile) na raiz) publicado em https://mercadinho.unifor.mathlab.cc/, servindo a API e as telas no mesmo endereço |
 | Testes | `node:test` (nativo do Node) + `pg-mem` (PostgreSQL em memória) |
 
 ## Estrutura do projeto (camadas)
@@ -186,9 +186,11 @@ Cada regra é validada **duas vezes**: na tela (resposta rápida ao usuário) e 
 npm test
 ```
 
-São 17 testes em [`test/api.test.js`](test/api.test.js) que cobrem o CRUD das duas entidades e todas as regras do cenário. Eles usam o banco em memória, então não precisam de internet. Para rodar contra um PostgreSQL de **testes** (os dados dele são apagados): `DATABASE_URL_TESTE=postgresql://... npm test`.
+São 18 testes em [`test/api.test.js`](test/api.test.js) que cobrem o CRUD das duas entidades e todas as regras do cenário. Eles usam o banco em memória, então não precisam de internet. Para rodar contra um PostgreSQL de **testes** (os dados dele são apagados): `DATABASE_URL_TESTE=postgresql://... npm test`.
 
 ## Publicação
+
+A versão oficial está publicada em **https://mercadinho.unifor.mathlab.cc/**, a partir do [`Dockerfile`](Dockerfile) da raiz do repositório: um único contêiner com a API e as telas, com o banco PostgreSQL configurado pela variável `DATABASE_URL`. O passo a passo abaixo, com Neon e Render, fica como alternativa para publicar em outro lugar.
 
 Banco no **Neon** e aplicação no **Render**, ambos gratuitos e sem cartão de crédito. Precisa ficar no ar **até 10/12**.
 
@@ -256,6 +258,8 @@ Atualize esta lista a cada entrega relevante (mais recente no topo).
 
 | Data | O que mudou | Issue |
 |---|---|---|
+| 27/11 | README atualizado com o link da aplicação publicada e a publicação via Docker | |
+| 21/11 | Dockerfile para publicar API e telas em um único contêiner; tela inicial servida na raiz | #20 |
 | 18/11 | Serviço Web (Express) com CRUD de fornecedores e produtos, persistência em PostgreSQL, validações e tratamento de erros no servidor, testes automáticos, telas servidas pelo back-end, correção de sobras do merge nas telas (linha fixa "Fornecedor 1" e campo de CNPJ duplicado), README completo | ver issues do back-end |
 | 18/11 | Ajustes nas telas antes da integração com o back-end | |
 | 17/11 | Telas integradas ao serviço Web via `js/api.js` (listar, cadastrar/editar, excluir com trava, produtos do fornecedor) | #2 a #6 |
